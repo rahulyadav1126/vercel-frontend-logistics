@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Glassmorphism custom styling utilities */
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.glassmorphism-dark {
+  background: rgba(11, 31, 77, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Custom premium hover and animation effects */
+.hover-premium {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hover-premium:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 45px -12px rgba(11, 31, 77, 0.15);
+}
+
+.accent-glow-red {
+  box-shadow: 0 4px 20px -2px rgba(215, 25, 32, 0.35);
+}
+
+.accent-glow-navy {
+  box-shadow: 0 4px 20px -2px rgba(11, 31, 77, 0.25);
+}
+
+/* Timeline Custom Lines */
+.timeline-line {
+  background: linear-gradient(to bottom, #0B1F4D, #D71920, #0B1F4D);
+}
+
+/* Scrollbar Customizing */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #0b1f4d;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d71920;
+}

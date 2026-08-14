@@ -40,7 +40,7 @@ const About = () => {
         </div>
         <div className="relative rounded-2xl overflow-hidden shadow-soft-lg h-72">
           <img
-            src="https://images.unsplash.com/photo-1521791136368-1a8682707636?auto=format&fit=crop&q=80&w=600"
+            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=600"
             alt="Corporate office meeting"
             className="w-full h-full object-cover"
           />
@@ -49,12 +49,12 @@ const About = () => {
 
       {/* Vision & Mission grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
-        <Card hoverEffect={false} className="p-8 bg-brand-navy text-white">
+        <Card hoverEffect={false} className="p-8 bg-slate-50 border border-slate-200">
           <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-red text-white mb-6">
             <Eye className="h-6 w-6" />
           </div>
-          <h4 className="text-xl font-bold text-white mb-4">Our Vision</h4>
-          <p className="text-slate-300 text-sm leading-relaxed">
+          <h4 className="text-xl font-bold text-brand-navy mb-4">Our Vision</h4>
+          <p className="text-slate-600 text-sm leading-relaxed">
             To build the world’s most reliable, compliance-first, and technologically integrated logistics and manpower supply network. We strive to set new benchmarks for workforce compliance and freight reliability.
           </p>
         </Card>

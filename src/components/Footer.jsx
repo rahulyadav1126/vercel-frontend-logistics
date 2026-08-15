@@ -205,23 +205,25 @@
 
 
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, ChevronRight } from 'lucide-react';
 import Button from './ui/Button';
+import SuccessModal from './ui/SuccessModal';
 import logo from "../assets/logo.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
   const handleSubscribe = (e) => {
     e.preventDefault();
-    alert('Thank you for subscribing to our corporate newsletter!');
+    setIsSuccessModalOpen(true);
     e.target.reset();
   };
 
   return (
-    <footer className="bg-brand-navy text-slate-300 pt-16 pb-20 border-t-4 border-brand-red">
+    <footer className="bg-brand-navy text-slate-300 pt-16 pb-0 border-t-4 border-brand-red">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Column 1: Company Profile */}
@@ -238,7 +240,7 @@ const Footer = () => {
                 Manas Madhav
               </span>
             </Link>
-            
+
             <p className="text-slate-400 mb-6 text-sm leading-relaxed">
               An enterprise leader in logistics, heavy hauling, global freight management, and professional manpower staffing. Delivering reliability and corporate excellence.
             </p>
@@ -358,14 +360,14 @@ const Footer = () => {
             >
               Privacy Policy
             </Link>
-            <Link 
-              to="/terms-of-service" 
+            <Link
+              to="/terms-of-service"
               className="hover:text-white transition-colors duration-300 hover:translate-x-0.5"
             >
               Terms of Service
             </Link>
-            <Link 
-              to="/admin/login" 
+            <Link
+              to="/admin/login"
               className="hover:text-white font-semibold text-brand-red transition-all duration-300 hover:scale-105"
             >
               Admin Portal
@@ -373,6 +375,13 @@ const Footer = () => {
           </div>
         </div>
       </div>
+      
+      <SuccessModal 
+        isOpen={isSuccessModalOpen} 
+        onClose={() => setIsSuccessModalOpen(false)} 
+        title="Subscription Successful!"
+        message="Thank you for subscribing to our corporate newsletter!"
+      />
     </footer>
   );
 };

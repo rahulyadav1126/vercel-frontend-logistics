@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const TermsOfService = () => {
-     const navigate = useNavigate();
+  const navigate = useNavigate();
   const sections = [
     {
       title: "Acceptance of Terms",
@@ -72,7 +72,7 @@ const TermsOfService = () => {
 
           <div className="space-y-6">
 
-            {sections.map((item,index)=>(
+            {sections.map((item, index) => (
               <div
                 key={index}
                 className="p-5 rounded-2xl bg-slate-50 border hover:border-brand-red transition"
@@ -104,8 +104,8 @@ const TermsOfService = () => {
               Contact our team for any questions regarding these terms.
             </p>
 
-            <button   onClick={() => navigate("/contact")}
-            className="mt-5 bg-brand-red text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90">
+            <button onClick={() => navigate("/contact")}
+              className="mt-5 bg-brand-red text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90">
               Contact Us
             </button>
 

@@ -510,7 +510,12 @@ const Contact = () => {
                       <label className="block text-sm font-semibold text-brand-navy mb-2">Full Name *</label>
                       <input
                         type="text"
-                        {...register('name', { required: 'Name is required' })}
+                        {...register('name', { 
+                          required: 'Name is required',
+                          minLength: { value: 2, message: 'Name must be at least 2 characters' },
+                          maxLength: { value: 50, message: 'Name must be less than 50 characters' },
+                          pattern: { value: /^[a-zA-Z\s'-]+$/, message: 'Name can only contain letters, spaces, apostrophes, and hyphens' }
+                        })}
                         className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-brand-red focus:ring-4 focus:ring-brand-red/20 transition-all duration-300 outline-none hover:border-brand-red/50"
                         placeholder="Jane Doe"
                       />
@@ -532,9 +537,13 @@ const Contact = () => {
                         {...register('email', {
                           required: 'Email is required',
                           pattern: {
-                            value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-                            message: 'Valid email required',
+                            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                            message: 'Please enter a valid email address (e.g., name@company.com)',
                           },
+                          validate: {
+                            noSpaces: (value) => !value.includes(' ') || 'Email cannot contain spaces',
+                            validDomain: (value) => /\.(com|org|net|in|edu|gov|co|io)$/i.test(value) || 'Please enter a valid email domain (.com, .org, .in, etc.)'
+                          }
                         })}
                         className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-brand-red focus:ring-4 focus:ring-brand-red/20 transition-all duration-300 outline-none hover:border-brand-red/50"
                         placeholder="jane@company.com"
@@ -593,7 +602,11 @@ const Contact = () => {
                       <label className="block text-sm font-semibold text-brand-navy mb-2">Subject *</label>
                       <input
                         type="text"
-                        {...register('subject', { required: 'Subject is required' })}
+                        {...register('subject', { 
+                          required: 'Subject is required',
+                          minLength: { value: 3, message: 'Subject must be at least 3 characters' },
+                          maxLength: { value: 100, message: 'Subject must be less than 100 characters' }
+                        })}
                         className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-brand-red focus:ring-4 focus:ring-brand-red/20 transition-all duration-300 outline-none hover:border-brand-red/50"
                         placeholder="Manpower Supply / Freight quote"
                       />
@@ -614,7 +627,11 @@ const Contact = () => {
                     <label className="block text-sm font-semibold text-brand-navy mb-2">Message *</label>
                     <textarea
                       rows="5"
-                      {...register('message', { required: 'Message content is required' })}
+                      {...register('message', { 
+                        required: 'Message content is required',
+                        minLength: { value: 10, message: 'Message must be at least 10 characters' },
+                        maxLength: { value: 1000, message: 'Message must be less than 1000 characters' }
+                      })}
                       className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-brand-red focus:ring-4 focus:ring-brand-red/20 transition-all duration-300 outline-none hover:border-brand-red/50 resize-none"
                       placeholder="Enter your message in detail..."
                     ></textarea>
@@ -727,20 +744,12 @@ const Contact = () => {
 
       {/* Map Section */}
       <motion.div
-        className="rounded-2xl overflow-hidden shadow-2xl border-2 border-slate-200 h-96 w-full relative group"
+        className="rounded-2xl overflow-hidden shadow-2xl border-2 border-slate-200 h-96 w-full relative"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.5 }}
-        whileHover={{ scale: 1.01 }}
+        whileHover={{ y: -2 }}
       >
-        {/* Map overlay badge */}
-        <div className="absolute top-4 left-4 z-10 bg-white/95 backdrop-blur-sm px-4 py-2.5 rounded-xl shadow-lg border border-slate-200 flex items-center gap-2 group-hover:bg-white transition-all duration-300">
-          <div className="p-1.5 bg-brand-red/10 rounded-lg group-hover:bg-brand-red/20 transition-colors duration-300">
-            <Globe className="h-4 w-4 text-brand-red" />
-          </div>
-          <span className="text-xs font-semibold text-brand-navy">Find Us Here</span>
-        </div>
-
         {/* Map interaction overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent pointer-events-none"></div>
 
@@ -753,7 +762,7 @@ const Contact = () => {
           allowFullScreen
           loading="lazy"
           referrerPolicy="strict-origin-when-cross-origin"
-          className="group-hover:scale-105 transition-transform duration-700"
+          className="transition-opacity duration-300 hover:opacity-90"
         />
       </motion.div>
     </div>

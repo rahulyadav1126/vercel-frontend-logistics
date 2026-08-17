@@ -37,7 +37,7 @@ const Industries = () => {
         'High accuracy picking rate metrics',
       ],
       icon: ShoppingCart,
-      image: 'https://images.unsplash.com/photo-1516576885230-101c7414ddf2?auto=format&fit=crop&q=80&w=600',
+      image: 'https://images.unsplash.com/photo-1580674285054-bed31e145f59?auto=format&fit=crop&q=80&w=600',
     },
     {
       title: 'Transportation & Commercial Fleet Logistics',

@@ -27,11 +27,10 @@ const Gallery = () => {
           <button
             key={cat}
             onClick={() => setSelectedCategory(cat)}
-            className={`px-6 py-2.5 rounded-full font-bold text-sm transition-all duration-300 shadow ${
-              selectedCategory === cat
+            className={`px-6 py-2.5 rounded-full font-bold text-sm transition-all duration-300 shadow ${selectedCategory === cat
                 ? 'bg-brand-red text-white'
                 : 'bg-white text-brand-navy hover:bg-slate-100'
-            }`}
+              }`}
           >
             {cat}
           </button>

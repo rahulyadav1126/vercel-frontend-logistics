@@ -223,7 +223,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-brand-navy text-slate-300 pt-16 pb-0 border-t-4 border-brand-red">
+    <footer className="bg-brand-navy text-slate-300 pt-16 pb-8 border-t-4 border-brand-red">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Column 1: Company Profile */}
@@ -352,7 +352,7 @@ const Footer = () => {
 
         {/* Footer Bottom copyright */}
         <div className="flex flex-col md:flex-row items-center justify-between mt-8 text-xs text-slate-500">
-          <p>© {currentYear} Manas Madhav Logistics & Manpower Services. All rights reserved.</p>
+          <p>© {currentYear} Manas Madhav Logistics & Manpower Services. All rights reserved. | Designed & Developed by Rahul Yadav</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <Link
               to="/privacy-policy"

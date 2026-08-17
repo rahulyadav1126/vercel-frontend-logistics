@@ -1642,7 +1642,7 @@ const Home = () => {
           {[
             { title: 'Manufacturing & Plants', icon: Building2, bg: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=300' },
             { title: 'Warehouse Logistics', icon: Package, bg: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=300' },
-            { title: 'Retail & FMCG Networks', icon: ShoppingBag, bg: 'https://images.unsplash.com/photo-1516576885230-101c7414ddf2?auto=format&fit=crop&q=80&w=300' },
+            { title: 'Retail & FMCG Networks', icon: ShoppingBag, bg: 'https://images.unsplash.com/photo-1580674285054-bed31e145f59?auto=format&fit=crop&q=80&w=300' },
             { title: 'Civil Infrastructure', icon: Building2, bg: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=300' },
           ].map((item, idx) => (
             <motion.div

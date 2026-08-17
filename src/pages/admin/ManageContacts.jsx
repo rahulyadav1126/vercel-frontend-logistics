@@ -75,10 +75,15 @@ const ManageContacts = () => {
           <p className="text-sm mt-1">{error}</p>
         </div>
       ) : contacts.length === 0 ? (
-        <div className="text-center py-16 text-slate-400">
-          <Mail className="mx-auto h-12 w-12 mb-3 text-slate-300" />
-          <p className="font-semibold text-slate-500">No contact messages received yet.</p>
-        </div>
+        <Card className="flex flex-col items-center justify-center py-32 text-center shadow-sm border border-slate-200">
+          <div className="h-20 w-20 bg-slate-50 rounded-full flex items-center justify-center mb-6">
+            <Mail className="h-10 w-10 text-slate-400" />
+          </div>
+          <h4 className="text-xl font-bold text-brand-navy mb-2">No Contact Inquiries Yet</h4>
+          <p className="text-slate-500 max-w-md">
+            When users submit a message through the contact form on the website, it will appear here.
+          </p>
+        </Card>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Leads List */}

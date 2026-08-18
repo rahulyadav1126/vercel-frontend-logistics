@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Plus, Edit2, Trash2, X, Check, Star, AlertCircle } from 'lucide-react';
+import { Plus, Edit2, Trash2, X, Check, Star, AlertCircle, Upload } from 'lucide-react';
 import useFetch from '../../hooks/useFetch';
 import api from '../../utils/api';
 import Button from '../../components/ui/Button';
@@ -23,6 +23,7 @@ const ManageTestimonials = () => {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm();
 
@@ -80,15 +81,32 @@ const ManageTestimonials = () => {
     setSubmitting(true);
     setErrorMessage('');
 
-    const payload = {
-      clientName: data.clientName,
-      company: data.company,
-      feedback: data.feedback,
-      rating: Number(data.rating),
-      avatar: data.avatar,
-    };
+    let finalAvatarUrl = data.avatar || (editingTestimonial ? editingTestimonial.avatar : 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150');
 
     try {
+      // Handle file upload if a file was selected
+      if (data.avatarFile && data.avatarFile.length > 0) {
+        const formData = new FormData();
+        formData.append('file', data.avatarFile[0]);
+        const uploadRes = await api.post('/api/upload', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        
+        if (uploadRes.data.success) {
+          finalAvatarUrl = uploadRes.data.url;
+        } else {
+          throw new Error('Image upload failed');
+        }
+      }
+
+      const payload = {
+        clientName: data.clientName,
+        company: data.company,
+        feedback: data.feedback,
+        rating: Number(data.rating),
+        avatar: finalAvatarUrl,
+      };
+
       let response;
       if (editingTestimonial) {
         response = await api.put(`/api/testimonials/${editingTestimonial._id}`, payload);
@@ -105,7 +123,7 @@ const ManageTestimonials = () => {
         setErrorMessage(response.data.error || 'Failed to save testimonial.');
       }
     } catch (err) {
-      setErrorMessage(err.response?.data?.error || 'Server connection error.');
+      setErrorMessage(err.response?.data?.error || err.message || 'Server connection error.');
     } finally {
       setSubmitting(false);
     }
@@ -247,15 +265,23 @@ const ManageTestimonials = () => {
                 {errors.feedback && <p className="text-red-500 text-xs mt-1">{errors.feedback.message}</p>}
               </div>
 
-              {/* Avatar Url */}
+              {/* Avatar Upload */}
               <div>
-                <label className="block font-semibold text-brand-navy mb-1.5">Avatar Image URL</label>
-                <input
-                  type="text"
-                  {...register('avatar')}
-                  className="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-navy"
-                  placeholder="https://images.unsplash.com/..."
-                />
+                <label className="block font-semibold text-brand-navy mb-1.5">Upload Image (JPG/PNG/WEBP) *</label>
+                <div className="relative">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    {...register('avatarFile')}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  />
+                  <div className="w-full px-4 py-2.5 rounded-lg border border-slate-300 bg-white flex items-center text-slate-500 focus-within:ring-2 focus-within:ring-brand-navy transition-all">
+                    <Upload className="h-5 w-5 mr-3 text-brand-navy flex-shrink-0" />
+                    <span className="truncate">
+                      {watch('avatarFile')?.[0]?.name || 'Click to choose image file...'}
+                    </span>
+                  </div>
+                </div>
               </div>
 
               {/* Action buttons */}

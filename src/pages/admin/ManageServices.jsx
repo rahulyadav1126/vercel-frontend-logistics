@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Plus, Edit2, Trash2, X, Check, HelpCircle, AlertCircle } from 'lucide-react';
+import { Plus, Edit2, Trash2, X, Check, HelpCircle, AlertCircle, Upload } from 'lucide-react';
 import useFetch from '../../hooks/useFetch';
 import api from '../../utils/api';
 import Button from '../../components/ui/Button';
@@ -24,6 +24,7 @@ const ManageServices = () => {
     handleSubmit,
     reset,
     setValue,
+    watch,
     formState: { errors },
   } = useForm();
 
@@ -83,21 +84,38 @@ const ManageServices = () => {
     setSubmitting(true);
     setErrorMessage('');
 
-    // Convert comma-separated string details back to array
-    const details = data.detailsString
-      ? data.detailsString.split(',').map((item) => item.trim()).filter((item) => item.length > 0)
-      : [];
-
-    const payload = {
-      title: data.title,
-      description: data.description,
-      category: data.category,
-      icon: data.icon,
-      imageUrl: data.imageUrl,
-      details,
-    };
+    let finalImageUrl = data.imageUrl || (editingService ? editingService.imageUrl : 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&q=80&w=600');
 
     try {
+      // Handle file upload if a file was selected
+      if (data.imageFile && data.imageFile.length > 0) {
+        const formData = new FormData();
+        formData.append('file', data.imageFile[0]);
+        const uploadRes = await api.post('/api/upload', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        
+        if (uploadRes.data.success) {
+          finalImageUrl = uploadRes.data.url;
+        } else {
+          throw new Error('Image upload failed');
+        }
+      }
+
+      // Convert comma-separated string details back to array
+      const details = data.detailsString
+        ? data.detailsString.split(',').map((item) => item.trim()).filter((item) => item.length > 0)
+        : [];
+
+      const payload = {
+        title: data.title,
+        description: data.description,
+        category: data.category,
+        icon: data.icon,
+        imageUrl: finalImageUrl,
+        details,
+      };
+
       let response;
       if (editingService) {
         response = await api.put(`/api/services/${editingService._id}`, payload);
@@ -114,7 +132,7 @@ const ManageServices = () => {
         setErrorMessage(response.data.error || 'Failed to save service.');
       }
     } catch (err) {
-      setErrorMessage(err.response?.data?.error || 'Server connection error.');
+      setErrorMessage(err.response?.data?.error || err.message || 'Server connection error.');
     } finally {
       setSubmitting(false);
     }
@@ -260,15 +278,23 @@ const ManageServices = () => {
                 </div>
               </div>
 
-              {/* Image URL */}
+              {/* Image Upload */}
               <div>
-                <label className="block font-semibold text-brand-navy mb-1.5">Image URL *</label>
-                <input
-                  type="text"
-                  {...register('imageUrl', { required: 'Image URL is required' })}
-                  className="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-navy"
-                  placeholder="https://images.unsplash.com/..."
-                />
+                <label className="block font-semibold text-brand-navy mb-1.5">Upload Image (JPG/PNG/WEBP) *</label>
+                <div className="relative">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    {...register('imageFile')}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  />
+                  <div className="w-full px-4 py-2.5 rounded-lg border border-slate-300 bg-white flex items-center text-slate-500 focus-within:ring-2 focus-within:ring-brand-navy transition-all">
+                    <Upload className="h-5 w-5 mr-3 text-brand-navy flex-shrink-0" />
+                    <span className="truncate">
+                      {watch('imageFile')?.[0]?.name || 'Click to choose image file...'}
+                    </span>
+                  </div>
+                </div>
               </div>
 
               {/* Details Bullet points */}

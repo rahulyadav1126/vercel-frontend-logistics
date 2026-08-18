@@ -1788,23 +1788,15 @@ const Home = () => {
                 transition={{ duration: 0.5 }}
               />
               <motion.div
-                className="absolute inset-0 bg-gradient-to-t from-brand-navy/90 via-brand-navy/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6"
-                initial={{ opacity: 0 }}
-                whileHover={{ opacity: 1 }}
+                className="absolute inset-0 bg-gradient-to-t from-brand-navy/90 via-brand-navy/50 to-transparent flex flex-col justify-end p-6"
               >
                 <motion.span
                   className="text-xs font-semibold text-brand-red uppercase tracking-wider"
-                  initial={{ y: 20, opacity: 0 }}
-                  whileHover={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.3 }}
                 >
                   {item.category}
                 </motion.span>
                 <motion.h4
                   className="text-white font-bold mt-1 text-base"
-                  initial={{ y: 20, opacity: 0 }}
-                  whileHover={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.3, delay: 0.1 }}
                 >
                   {item.title}
                 </motion.h4>
